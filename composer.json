@@ -1,0 +1,18 @@
+{
+  "name": "ee-objects/forms",
+  "description": "Provides helper objects for generating shared/forms ExpressionEngine development",
+  "require": {
+    "php": ">=7.1"
+  },
+  "prefer-stable": true,
+  "authors": [{
+    "name": "Eric Lamb",
+    "email": "eric@mithra62.com"
+  }],
+  "autoload": {
+    "psr-4": {
+      "EeObjects\\": "src"
+    }
+  },
+  "license": "MIT"
+}
