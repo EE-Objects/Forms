@@ -2,7 +2,8 @@
   "name": "ee-objects/forms",
   "description": "Provides helper objects for generating shared/forms ExpressionEngine development",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "ee-objects/exceptions": "^0.1"
   },
   "prefer-stable": true,
   "authors": [{
