@@ -1,5 +1,5 @@
 <?php
-namespace EeObjects\Exceptions;
+namespace EeObjects\Exceptions\Forms;
 
 use EeObjects\Exceptions\EeObjectsException;
 
