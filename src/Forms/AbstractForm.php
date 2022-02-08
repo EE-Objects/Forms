@@ -54,7 +54,7 @@ abstract class AbstractForm implements ValidationAware
      * @param string $url
      * @return $this
      */
-    public function setBaesUrl(string $url): AbstractForm
+    public function setBaseUrl(string $url): AbstractForm
     {
         $this->base_url = $url;
 
