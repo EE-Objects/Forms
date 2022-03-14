@@ -32,4 +32,25 @@ class Form
     protected $sections = [];
 
     protected $tabs = [];
+
+    protected $groups = null;
+
+    protected $sets = null;
+
+    protected $fields = null;
+
+    public function getGroup($name)
+    {
+
+    }
+
+    public function getSet($name)
+    {
+
+    }
+
+    public function getField($name)
+    {
+
+    }
 }
