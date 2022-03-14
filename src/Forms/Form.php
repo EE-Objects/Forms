@@ -6,7 +6,7 @@ class Form
     /**
      * @var array
      */
-    protected $data = [
+    protected $prototype = [
         'save_btn_text' => 'save',
         'save_btn_text_working' => 'saving',
         'ajax_validate' => false,
@@ -24,38 +24,11 @@ class Form
         'tabs' => []
     ];
 
-    /**
-     * A Collection of Field Groups
-     * @var Form\Groups
-     */
-    protected $groups = null;
-
-    /**
-     * A Collection of Field Sets
-     * @var Form\Sets
-     */
-    protected $sets = null;
-
-    /**
-     * A Collection of Fields
-     * @var Form\Fields
-     */
-    protected $fields = null;
-
-    /**
-     * @var Form\Buttons
-     */
-    protected $buttons = null;
-
-    protected $hidden_fields = null;
+    protected $structure = [];
 
     public function __construct()
     {
-        $this->groups = new Form\Groups();
-        $this->sets = new Form\Sets();
-        $this->fields = new Form\Fields();
-        $this->buttons = new Form\Buttons();
-        $this->hidden_fields = new Form\Fields();
+
     }
 
     /**
@@ -64,6 +37,8 @@ class Form
      */
     public function getGroup($name)
     {
+        echo 'fdsa';
+        exit;
         if ($this->groups->has($name)) {
             return $this->groups->get($name);
         }
@@ -76,11 +51,50 @@ class Form
 
     }
 
-    public function getField($name)
+    /**
+     * @param $name
+     * @param $type
+     * @return mixed
+     */
+    public function getField($name, $type)
     {
+        $tmp_name = '_field_'.$name;
+        if (isset($this->structure[$tmp_name])) {
+            return $this->structure[$tmp_name];
+        }
 
+        $field = $this->buildField($name, $type);
+        $this->structure[$tmp_name] = new $field($name);
+        return $this;
     }
 
+    /**
+     * @param $name
+     * @param $type
+     * @return string
+     */
+    protected function buildField($name, $type)
+    {
+        $field = '\EeObjects\Forms\Form\Fields\\'.$this->studly($type);
+        if (class_exists($field)) {
+            return $field;
+        }
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    protected function studly($value)
+    {
+        return str_replace(' ', '',
+            ucwords(str_replace(['-', '_'], ' ', $value))
+        );
+    }
+
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return $this->data;
