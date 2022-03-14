@@ -1,8 +1,12 @@
 <?php
 namespace EeObjects\Forms;
 
+use EeObjects\Forms\Form\Traits\FieldTrait;
+
 class Form
 {
+    use FieldTrait;
+
     /**
      * @var array
      */
@@ -48,48 +52,13 @@ class Form
 
     public function getSet($name)
     {
-
-    }
-
-    /**
-     * @param $name
-     * @param $type
-     * @return mixed
-     */
-    public function getField($name, $type)
-    {
-        $tmp_name = '_field_'.$name;
+        $tmp_name = '_set_'.$name;
         if (isset($this->structure[$tmp_name])) {
             return $this->structure[$tmp_name];
         }
 
-        $field = $this->buildField($name, $type);
-        $this->structure[$tmp_name] = new $field($name);
-        return $this;
-    }
-
-    /**
-     * @param $name
-     * @param $type
-     * @return string
-     */
-    protected function buildField($name, $type)
-    {
-        $field = '\EeObjects\Forms\Form\Fields\\'.$this->studly($type);
-        if (class_exists($field)) {
-            return $field;
-        }
-    }
-
-    /**
-     * @param string $value
-     * @return string
-     */
-    protected function studly($value)
-    {
-        return str_replace(' ', '',
-            ucwords(str_replace(['-', '_'], ' ', $value))
-        );
+        $this->structure[$tmp_name] = new Form\Set($name);
+        return $this->structure[$tmp_name];
     }
 
     /**
@@ -107,8 +76,8 @@ class Form
      */
     public function set($name, $value)
     {
-        if(isset($this->data[$name])) {
-            $this->data[$name] = $value;
+        if(isset($this->prototype[$name])) {
+            $this->prototype[$name] = $value;
         }
 
         return $this;

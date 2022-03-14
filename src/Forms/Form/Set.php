@@ -1,9 +1,18 @@
 <?php
 namespace EeObjects\Forms\Form;
 
-use ExpressionEngine\Library\Data\Collection as CoreCollection;
+use EeObjects\Forms\Form\Traits\FieldTrait;
 
-class Set extends CoreCollection
+class Set
 {
+    use FieldTrait;
 
+    protected $name = '';
+
+    protected $structure = [];
+
+    public function __construct($name = '')
+    {
+        $this->name = $name;
+    }
 }
