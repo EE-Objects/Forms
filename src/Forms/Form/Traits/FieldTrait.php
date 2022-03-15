@@ -3,11 +3,9 @@ namespace EeObjects\Forms\Form\Traits;
 
 trait FieldTrait
 {
-
     /**
      * @param $name
      * @param $type
-     * @return Form\Field
      */
     public function getField($name, $type)
     {
@@ -29,7 +27,7 @@ trait FieldTrait
     {
         $field = '\EeObjects\Forms\Form\Fields\\'.$this->studly($type);
         if (class_exists($field)) {
-            return new $field($name);
+            return new $field($name, $type);
         }
 
         throw new \Exception($field.' does not exist!');

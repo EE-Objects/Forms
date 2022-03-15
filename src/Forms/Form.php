@@ -2,10 +2,13 @@
 namespace EeObjects\Forms;
 
 use EeObjects\Forms\Form\Traits\FieldTrait;
+use EeObjects\Forms\Form\Traits\SetTrait;
+use EeObjects\Forms\Form\Group;
 
 class Form
 {
-    use FieldTrait;
+    use FieldTrait,
+        SetTrait;
 
     /**
      * @var array
@@ -13,14 +16,14 @@ class Form
     protected $prototype = [
         'save_btn_text' => 'save',
         'save_btn_text_working' => 'saving',
-        'ajax_validate' => false,
-        'has_file_input' => false,
+        'ajax_validate' => null,
+        'has_file_input' => null,
         'alerts_name' => '',
         'form_hidden' => [],
-        'cp_page_title_alt' => false,
+        'cp_page_title_alt' => null,
         'cp_page_title' => '',
         'action_button' => [],
-        'hide_top_buttons' => false,
+        'hide_top_buttons' => null,
         'extra_alerts' => [],
         'buttons' => [],
         'base_url' => '',
@@ -28,12 +31,11 @@ class Form
         'tabs' => []
     ];
 
+    /**
+     * Contains the objects, in order, for the form
+     * @var array
+     */
     protected $structure = [];
-
-    public function __construct()
-    {
-
-    }
 
     /**
      * @param $name
@@ -41,23 +43,12 @@ class Form
      */
     public function getGroup($name)
     {
-        echo 'fdsa';
-        exit;
-        if ($this->groups->has($name)) {
-            return $this->groups->get($name);
-        }
-
-        return $this->groups->create($name);
-    }
-
-    public function getSet($name)
-    {
-        $tmp_name = '_set_'.$name;
+        $tmp_name = '_group_'.$name;
         if (isset($this->structure[$tmp_name])) {
             return $this->structure[$tmp_name];
         }
 
-        $this->structure[$tmp_name] = new Form\Set($name);
+        $this->structure[$tmp_name] = new Group($name);
         return $this->structure[$tmp_name];
     }
 
@@ -66,7 +57,9 @@ class Form
      */
     public function toArray()
     {
-        return $this->data;
+        print_r($this->structure);
+        exit;
+        return $this->structure;
     }
 
     /**

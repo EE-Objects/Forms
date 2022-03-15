@@ -1,9 +1,28 @@
 <?php
 namespace EeObjects\Forms\Form;
 
-use ExpressionEngine\Library\Data\Collection as CoreCollection;
+use EeObjects\Forms\Form\Traits\FieldTrait;
+use EeObjects\Forms\Form\Traits\SetTrait;
 
-class Group extends CoreCollection
+class Group
 {
+    use FieldTrait,
+        SetTrait;
 
+    protected $name = '';
+
+    /**
+     * @var array
+     */
+    protected $prototype = [];
+
+    /**
+     * @var array
+     */
+    protected $structure = [];
+
+    public function __construct($name = '')
+    {
+        $this->name = $name;
+    }
 }

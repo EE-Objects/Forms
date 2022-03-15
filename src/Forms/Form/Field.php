@@ -22,7 +22,8 @@ abstract class Field
         'group' => false,
         'group_toggle' => false,
         'required' => false,
-        'placeholder' => ''
+        'maxlength' => false,
+        'placeholder' => false
     ];
 
     /**
@@ -35,11 +36,12 @@ abstract class Field
      */
     protected $prototype = [];
 
-    public function __construct($name = false)
+    public function __construct($name = false, $type = false)
     {
         $this->name = $name;
         $this->prototype = array_merge($this->default_prototype, $this->field_prototype);
         $this->prototype['name'] = $name;
+        $this->prototype['type'] = $type;
     }
 
     /**
