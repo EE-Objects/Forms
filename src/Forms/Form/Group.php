@@ -18,7 +18,7 @@ class Group
      */
     protected $structure = [];
 
-    public function __construct($name = '')
+    public function __construct(string $name = '')
     {
         $this->name = $name;
     }
@@ -58,9 +58,10 @@ class Group
     }
 
     /**
-     * @param $name
+     * @param string $name
+     * @return Set
      */
-    public function getFieldSet($name): Set
+    public function getFieldSet(string $name): Set
     {
         $tmp_name = $this->buildTmpName($name);
         if (isset($this->structure[$tmp_name])) {
@@ -72,10 +73,10 @@ class Group
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return bool
      */
-    public function removeFieldSet($name): bool
+    public function removeFieldSet(string $name): bool
     {
         $tmp_name = $this->buildTmpName($name);
         if (isset($this->structure[$tmp_name])) {
@@ -87,10 +88,10 @@ class Group
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return string
      */
-    protected function buildTmpName($name): string
+    protected function buildTmpName(string $name): string
     {
         return '_set_'.$name;
     }

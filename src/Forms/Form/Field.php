@@ -36,7 +36,7 @@ abstract class Field
      */
     protected $prototype = [];
 
-    public function __construct($name = false, $type = false)
+    public function __construct(string $name = '', string $type = '')
     {
         $this->name = $name;
         $this->prototype = array_merge($this->default_prototype, $this->field_prototype);
@@ -45,21 +45,21 @@ abstract class Field
     }
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param mixed $value
      * @return $this
      */
-    public function set($name, $value): Field
+    public function set(string $name, $value): Field
     {
         $this->prototype[$name] = $value;
         return $this;
     }
 
     /**
-     * @param $key
+     * @param string $key
      * @return mixed
      */
-    public function get($key)
+    public function get(string $key)
     {
         if(isset($this->prototype[$key])) {
             return $this->prototype[$key];

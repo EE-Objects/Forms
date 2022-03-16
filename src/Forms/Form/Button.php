@@ -28,7 +28,7 @@ class Button
      */
     protected $structure = [];
 
-    public function __construct($name = '')
+    public function __construct(string $name = '')
     {
         $this->name = $this->prototype['name'] = $name;
         $this->prototype['type'] = 'button';
@@ -43,11 +43,11 @@ class Button
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param $value
      * @return $this
      */
-    public function set($name, $value): Button
+    public function set(string $name, $value): Button
     {
         $this->prototype[$name] = $value;
         return $this;

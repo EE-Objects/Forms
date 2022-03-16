@@ -264,10 +264,7 @@ class Form
         $sections = $tabs = [];
         foreach($this->structure AS $structure) {
             if($this->isTab()) {
-                $data = $structure->toArray();
-                $tab = ee('View')->make('ee:_shared/form/section')
-                    ->render(array_merge(['name' => false, 'settings' => $data], $return));
-                $tabs[$structure->getName()] = $tab;
+                $tabs[$structure->getName()] = $structure->renderTab($return);
             } else {
                 $sections[$structure->getName()] = $structure->toArray();
             }

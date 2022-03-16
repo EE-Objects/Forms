@@ -24,7 +24,7 @@ class Set
      */
     protected $structure = [];
 
-    public function __construct($name = '')
+    public function __construct(string $name = '')
     {
         $this->name = $this->prototype['title'] = $name;
     }
