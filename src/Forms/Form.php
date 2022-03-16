@@ -93,4 +93,16 @@ class Form
 
         return $return;
     }
+
+    /**
+     * @param $text
+     * @param $href
+     * @param string $rel
+     * @return Group
+     */
+    public function withActionButton($text, $href, $rel = ''): Form
+    {
+        $this->set('action_button', ['text' => $text, 'href' => $href, 'rel' => $rel]);
+        return $this;
+    }
 }

@@ -13,9 +13,10 @@ class Set
      */
     protected $prototype = [
         'title' => '',
-        'desc' => false,
-        'desc_cont' => false,
-        'example' => false,
+        'desc' => null,
+        'desc_cont' => null,
+        'example' => null,
+        'button' => null
     ];
 
     /**
@@ -99,5 +100,11 @@ class Set
         return str_replace(' ', '',
             ucwords(str_replace(['-', '_'], ' ', $value))
         );
+    }
+
+    public function withButton($text, $rel = '', $for = '')
+    {
+        $this->set('button', ['text' => $text, 'rel' => $rel, 'for' => $for]);
+        return $this;
     }
 }
