@@ -80,12 +80,36 @@ class Group
      */
     public function getFieldSet($name): Set
     {
-        $tmp_name = '_set_'.$name;
+        $tmp_name = $this->buildTmpName($name);
         if (isset($this->structure[$tmp_name])) {
             return $this->structure[$tmp_name];
         }
 
         $this->structure[$tmp_name] = new Set($name);
         return $this->structure[$tmp_name];
+    }
+
+    /**
+     * @param $name
+     * @return bool
+     */
+    public function removeFieldSet($name): bool
+    {
+        $tmp_name = $this->buildTmpName($name);
+        if (isset($this->structure[$tmp_name])) {
+            unset($this->structure[$tmp_name]);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    protected function buildTmpName($name): string
+    {
+        return '_set_'.$name;
     }
 }

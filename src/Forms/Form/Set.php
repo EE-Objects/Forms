@@ -41,6 +41,17 @@ class Set
     }
 
     /**
+     * @param $key
+     * @return mixed
+     */
+    public function get($key)
+    {
+        if(isset($this->prototype[$key])) {
+            return $this->prototype[$key];
+        }
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
@@ -67,13 +78,28 @@ class Set
      */
     public function getField($name, $type): Field
     {
-        $tmp_name = '_field_'.$name;
+        $tmp_name = $this->buildTmpName($name);
         if (isset($this->structure[$tmp_name])) {
             return $this->structure[$tmp_name];
         }
 
         $this->structure[$tmp_name] = $this->buildField($name, $type);
         return $this->structure[$tmp_name];
+    }
+
+    /**
+     * @param $name
+     * @return bool
+     */
+    public function removeField($name): bool
+    {
+        $tmp_name = $this->buildTmpName($name);
+        if (isset($this->structure[$tmp_name])) {
+            unset($this->structure[$tmp_name]);
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -112,5 +138,15 @@ class Set
     {
         $this->set('button', ['text' => $text, 'rel' => $rel, 'for' => $for]);
         return $this;
+    }
+
+
+    /**
+     * @param $name
+     * @return string
+     */
+    protected function buildTmpName($name): string
+    {
+        return '_field_'.$name;
     }
 }
