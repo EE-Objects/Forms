@@ -14,11 +14,6 @@ class Group
     protected $prototype = [];
 
     /**
-     * @var bool
-     */
-    protected $tab = false;
-
-    /**
      * @var array
      */
     protected $structure = [];
@@ -37,29 +32,16 @@ class Group
     }
 
     /**
-     * @return $this
+     * @param array $vars
+     * @return mixed
      */
-    public function asTab(): Group
+    public function renderTab(array $vars = [])
     {
-        $this->tab = true;
-        return $this;
-    }
+        $data = $this->toArray();
+        $tabs = ee('View')->make('ee:_shared/form/section')
+            ->render(array_merge(['name' => false, 'settings' => $data], $vars));
 
-    /**
-     * @return bool
-     */
-    public function isTab(): bool
-    {
-        return $this->tab;
-    }
-
-    /**
-     * @return $this
-     */
-    public function asHeading(): Group
-    {
-        $this->tab = false;
-        return $this;
+        return $tabs;
     }
 
     /**

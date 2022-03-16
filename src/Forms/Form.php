@@ -45,6 +45,37 @@ class Form
     protected $hidden_fields = [];
 
     /**
+     * @var bool
+     */
+    protected $tab = false;
+
+    /**
+     * @return $this
+     */
+    public function asTab(): Form
+    {
+        $this->tab = true;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTab(): bool
+    {
+        return $this->tab;
+    }
+
+    /**
+     * @return $this
+     */
+    public function asHeading(): Form
+    {
+        $this->tab = false;
+        return $this;
+    }
+
+    /**
      * @param $name
      * @return mixed
      */
@@ -123,8 +154,11 @@ class Form
 
         $sections = $tabs = [];
         foreach($this->structure AS $structure) {
-            if($structure->isTab()) {
-                $tabs[$structure->getName()] = $structure->renderTab();
+            if($this->isTab()) {
+                $data = $structure->toArray();
+                $tab = ee('View')->make('ee:_shared/form/section')
+                    ->render(array_merge(['name' => false, 'settings' => $data], $return));
+                $tabs[$structure->getName()] = $tab;
             } else {
                 $sections[$structure->getName()] = $structure->toArray();
             }
