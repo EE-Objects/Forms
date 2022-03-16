@@ -43,4 +43,9 @@ class Set
 
         return $this;
     }
+
+    public function toArray()
+    {
+        return [];
+    }
 }

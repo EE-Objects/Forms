@@ -4,6 +4,8 @@ namespace EeObjects\Forms;
 use EeObjects\Forms\Form\Traits\FieldTrait;
 use EeObjects\Forms\Form\Traits\SetTrait;
 use EeObjects\Forms\Form\Group;
+use EeObjects\Forms\Form\Set;
+use EeObjects\Forms\Form\Field;
 
 class Form
 {
@@ -19,16 +21,16 @@ class Form
         'ajax_validate' => null,
         'has_file_input' => null,
         'alerts_name' => '',
-        'form_hidden' => [],
+        'form_hidden' => null,
         'cp_page_title_alt' => null,
         'cp_page_title' => '',
-        'action_button' => [],
+        'action_button' => null,
         'hide_top_buttons' => null,
-        'extra_alerts' => [],
-        'buttons' => [],
+        'extra_alerts' => null,
+        'buttons' => null,
         'base_url' => '',
-        'sections' => [],
-        'tabs' => []
+        'sections' => null,
+        'tabs' => null
     ];
 
     /**
@@ -57,9 +59,8 @@ class Form
      */
     public function toArray()
     {
-        print_r($this->structure);
-        exit;
-        return $this->structure;
+        $data = $this->compile();
+        return $data;
     }
 
     /**
@@ -74,5 +75,69 @@ class Form
         }
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    protected function compile()
+    {
+        $return = [];
+        foreach($this->prototype AS $key => $value) {
+            if(!is_null($value)) {
+                $return[$key] = $value;
+            }
+        }
+
+        $sections = $tabs = $fields = [];
+        $count = $group_name = 0;
+        foreach($this->structure AS $structure)
+        {
+            if($structure instanceof Group) {
+                if($structure->isTab()) {
+                    $tabs[$structure->getName()] = $structure->renderTab();
+                } else {
+                    $sections[$structure->getName()] = $structure->toArray();
+                }
+                $group_name = $structure->getName();
+            } elseif($structure instanceof Set) {
+                $sections[$group_name][] = $structure->toArray();
+            } elseif($structure instanceof Field) {
+                $sections[$group_name][] = $structure->asSet();
+            }
+        }
+
+
+        print_r($sections);
+        exit;
+
+        $return['sections'] = $sections;
+        $return['tabs'] = $tabs;
+
+        return $return;
+    }
+
+    protected function normalize()
+    {
+        $count = $group_name = 0;
+        $return = [];
+        foreach($this->structure AS $structure)
+        {
+            if($structure instanceof Group) {
+                $return[$structure->getName()] = $structure->toArray();
+                $group_name = $structure->getName();
+            } elseif($structure instanceof Set) {
+                $return[$group_name][] = $structure->toArray();
+            } elseif($structure instanceof Field) {
+                $return[$group_name][] = $structure->asSet();
+            }
+
+            $count++;
+        }
+
+        print_r($return);
+        exit;
+
+        return $return;
     }
 }

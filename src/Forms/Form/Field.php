@@ -13,17 +13,17 @@ abstract class Field
      */
     protected $default_prototype = [
         'class' => '',
-        'margin_top' => false,
-        'margin_left' => false,
-        'note' => false,
+        'margin_top' => null,
+        'margin_left' => null,
+        'note' => null,
         'attrs' => '',
-        'disabled' => false,
+        'disabled' => null,
         'value' => '',
-        'group' => false,
-        'group_toggle' => false,
-        'required' => false,
-        'maxlength' => false,
-        'placeholder' => false
+        'group' => null,
+        'group_toggle' => null,
+        'required' => null,
+        'maxlength' => null,
+        'placeholder' => null
     ];
 
     /**
@@ -56,5 +56,36 @@ abstract class Field
         }
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        $return = [];
+        foreach($this->prototype AS $key => $value) {
+            if(!is_null($value)) {
+                $return[$key] = $value;
+            }
+        }
+
+        return $return;
+    }
+
+    /**
+     * Renders a single Field as a single FieldSet array
+     * @return array[]
+     */
+    public function asSet()
+    {
+        $return = [
+            'title' => $this->name,
+            'fields' => [
+                $this->name => $this->toArray()
+            ]
+        ];
+
+        return [$return];
     }
 }

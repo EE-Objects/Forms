@@ -9,7 +9,7 @@ trait SetTrait
      * @param $name
      * @return Form\Set|mixed
      */
-    public function getSet($name)
+    public function getFieldSet($name)
     {
         $tmp_name = '_set_'.$name;
         if (isset($this->structure[$tmp_name])) {
