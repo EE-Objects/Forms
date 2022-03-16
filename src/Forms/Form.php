@@ -81,7 +81,7 @@ class Form
      */
     public function getGroup($name): Group
     {
-        $tmp_name = '_group_'.$name;
+        $tmp_name = $this->buildTmpName($name , 'group');
         if (isset($this->structure[$tmp_name])) {
             return $this->structure[$tmp_name];
         }
@@ -92,11 +92,26 @@ class Form
 
     /**
      * @param $name
+     * @return bool
+     */
+    public function removeGroup($name): bool
+    {
+        $tmp_name = $this->buildTmpName($name, 'group');
+        if (isset($this->structure[$tmp_name])) {
+            unset($this->structure[$tmp_name]);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $name
      * @return Button
      */
     public function getButton($name): Button
     {
-        $tmp_name = '_button_'.$name;
+        $tmp_name = $this->buildTmpName($name, 'button');
         if (isset($this->buttons[$tmp_name])) {
             return $this->buttons[$tmp_name];
         }
@@ -107,17 +122,56 @@ class Form
 
     /**
      * @param $name
+     * @return bool
+     */
+    public function removeButton($name): bool
+    {
+        $tmp_name = $this->buildTmpName($name, 'button');
+        if (isset($this->buttons[$tmp_name])) {
+            unset($this->buttons[$tmp_name]);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $name
      * @return Hidden
      */
     public function getHiddenField($name): Hidden
     {
-        $tmp_name = '_hf_'.$name;
+        $tmp_name = $this->buildTmpName($name, 'hf');
         if (isset($this->hidden_fields[$tmp_name])) {
             return $this->hidden_fields[$tmp_name];
         }
 
         $this->hidden_fields[$tmp_name] = new Hidden($name);
         return $this->hidden_fields[$tmp_name];
+    }
+
+    /**
+     * @param $name
+     * @return bool
+     */
+    public function removeHiddenField($name): bool
+    {
+        $tmp_name = $this->buildTmpName($name, 'hf');
+        if (isset($this->buttons[$tmp_name])) {
+            unset($this->buttons[$tmp_name]);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    protected function buildTmpName($name, $key): string
+    {
+        return '_'.$key.'_'.$name;
     }
 
     /**
