@@ -1,17 +1,10 @@
 <?php
 namespace EeObjects\Forms;
 
-use EeObjects\Forms\Form\Traits\FieldTrait;
-use EeObjects\Forms\Form\Traits\SetTrait;
 use EeObjects\Forms\Form\Group;
-use EeObjects\Forms\Form\Set;
-use EeObjects\Forms\Form\Field;
 
 class Form
 {
-    use FieldTrait,
-        SetTrait;
-
     /**
      * @var array
      */
@@ -70,10 +63,7 @@ class Form
      */
     public function set($name, $value)
     {
-        if(isset($this->prototype[$name])) {
-            $this->prototype[$name] = $value;
-        }
-
+        $this->prototype[$name] = $value;
         return $this;
     }
 
@@ -89,54 +79,17 @@ class Form
             }
         }
 
-        $sections = $tabs = $fields = [];
-        $count = $group_name = 0;
-        foreach($this->structure AS $structure)
-        {
-            if($structure instanceof Group) {
-                if($structure->isTab()) {
-                    $tabs[$structure->getName()] = $structure->renderTab();
-                } else {
-                    $sections[$structure->getName()] = $structure->toArray();
-                }
-                $group_name = $structure->getName();
-            } elseif($structure instanceof Set) {
-                $sections[$group_name][] = $structure->toArray();
-            } elseif($structure instanceof Field) {
-                $sections[$group_name][] = $structure->asSet();
+        $sections = $tabs = [];
+        foreach($this->structure AS $structure) {
+            if($structure->isTab()) {
+                $tabs[$structure->getName()] = $structure->renderTab();
+            } else {
+                $sections[$structure->getName()] = $structure->toArray();
             }
         }
-
-
-        print_r($sections);
-        exit;
 
         $return['sections'] = $sections;
         $return['tabs'] = $tabs;
-
-        return $return;
-    }
-
-    protected function normalize()
-    {
-        $count = $group_name = 0;
-        $return = [];
-        foreach($this->structure AS $structure)
-        {
-            if($structure instanceof Group) {
-                $return[$structure->getName()] = $structure->toArray();
-                $group_name = $structure->getName();
-            } elseif($structure instanceof Set) {
-                $return[$group_name][] = $structure->toArray();
-            } elseif($structure instanceof Field) {
-                $return[$group_name][] = $structure->asSet();
-            }
-
-            $count++;
-        }
-
-        print_r($return);
-        exit;
 
         return $return;
     }

@@ -9,7 +9,9 @@ class Textarea extends Field
      * @var int[]
      */
     protected $field_prototype = [
-        'maxlength' => 255,
-        'type' => 'text'
+        'maxlength' => null,
+        'type' => 'textarea',
+        'cols' => null,
+        'rows' => null
     ];
 }

@@ -1,12 +1,11 @@
 <?php
 namespace EeObjects\Forms\Form;
 
-use EeObjects\Forms\Form\Traits\FieldTrait;
-
 class Set
 {
-    use FieldTrait;
-
+    /**
+     * @var mixed|string
+     */
     protected $name = '';
 
     /**
@@ -17,7 +16,6 @@ class Set
         'desc' => false,
         'desc_cont' => false,
         'example' => false,
-        'button' => []
     ];
 
     /**
@@ -35,17 +33,71 @@ class Set
      * @param $value
      * @return $this
      */
-    public function set($name, $value)
+    public function set($name, $value): Set
     {
-        if(isset($this->prototype[$name])) {
-            $this->prototype[$name] = $value;
-        }
-
+        $this->prototype[$name] = $value;
         return $this;
     }
 
-    public function toArray()
+    /**
+     * @return array
+     */
+    public function toArray(): array
     {
-        return [];
+        $return = [];
+        foreach($this->prototype AS $key => $value) {
+            if(!is_null($value)) {
+                $return[$key] = $value;
+            }
+        }
+
+        $fields = [];
+        foreach($this->structure AS $structure) {
+            $fields[$structure->getName()] = $structure->toArray();
+        }
+
+        $return['fields'] = $fields;
+        return $return;
+    }
+
+    /**
+     * @param $name
+     * @param $type
+     */
+    public function getField($name, $type): Field
+    {
+        $tmp_name = '_field_'.$name;
+        if (isset($this->structure[$tmp_name])) {
+            return $this->structure[$tmp_name];
+        }
+
+        $this->structure[$tmp_name] = $this->buildField($name, $type);
+        return $this->structure[$tmp_name];
+    }
+
+    /**
+     * @param $name
+     * @param $type
+     * @return string
+     */
+    protected function buildField($name, $type): Field
+    {
+        $field = '\EeObjects\Forms\Form\Fields\\'.$this->studly($type);
+        if (class_exists($field)) {
+            return new $field($name, $type);
+        }
+
+        throw new \Exception($field.' does not exist!');
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    protected function studly($value): string
+    {
+        return str_replace(' ', '',
+            ucwords(str_replace(['-', '_'], ' ', $value))
+        );
     }
 }

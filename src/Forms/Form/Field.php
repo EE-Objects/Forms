@@ -4,9 +4,9 @@ namespace EeObjects\Forms\Form;
 abstract class Field
 {
     /**
-     * @var bool
+     * @var string
      */
-    protected $name = false;
+    protected $name = '';
 
     /**
      * @var array
@@ -49,19 +49,16 @@ abstract class Field
      * @param $value
      * @return $this
      */
-    public function set($name, $value)
+    public function set($name, $value): Field
     {
-        if(isset($this->prototype[$name])) {
-            $this->prototype[$name] = $value;
-        }
-
+        $this->prototype[$name] = $value;
         return $this;
     }
 
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $return = [];
         foreach($this->prototype AS $key => $value) {
@@ -74,18 +71,10 @@ abstract class Field
     }
 
     /**
-     * Renders a single Field as a single FieldSet array
-     * @return array[]
+     * @return string
      */
-    public function asSet()
+    public function getName(): string
     {
-        $return = [
-            'title' => $this->name,
-            'fields' => [
-                $this->name => $this->toArray()
-            ]
-        ];
-
-        return [$return];
+        return $this->name;
     }
 }

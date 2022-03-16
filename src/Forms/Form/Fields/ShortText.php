@@ -9,6 +9,6 @@ class ShortText extends Field
      * @var int[]
      */
     protected $field_prototype = [
-        'maxlength' => 255
+        'maxlength' => null
     ];
 }

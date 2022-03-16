@@ -1,14 +1,11 @@
 <?php
 namespace EeObjects\Forms\Form;
 
-use EeObjects\Forms\Form\Traits\FieldTrait;
-use EeObjects\Forms\Form\Traits\SetTrait;
-
 class Group
 {
-    use FieldTrait,
-        SetTrait;
-
+    /**
+     * @var string
+     */
     protected $name = '';
 
     /**
@@ -31,7 +28,10 @@ class Group
         $this->name = $name;
     }
 
-    public function getName()
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
         return $this->name;
     }
@@ -39,7 +39,7 @@ class Group
     /**
      * @return $this
      */
-    public function asTab()
+    public function asTab(): Group
     {
         $this->tab = true;
         return $this;
@@ -48,7 +48,7 @@ class Group
     /**
      * @return bool
      */
-    public function isTab()
+    public function isTab(): bool
     {
         return $this->tab;
     }
@@ -56,14 +56,36 @@ class Group
     /**
      * @return $this
      */
-    public function asHeading()
+    public function asHeading(): Group
     {
         $this->tab = false;
         return $this;
     }
 
-    public function toArray()
+    /**
+     * @return array
+     */
+    public function toArray(): array
     {
-        return [[]];
+        $return = [];
+        foreach($this->structure AS $key => $field_set) {
+            $return[] = $field_set->toArray();
+        }
+
+        return $return;
+    }
+
+    /**
+     * @param $name
+     */
+    public function getFieldSet($name): Set
+    {
+        $tmp_name = '_set_'.$name;
+        if (isset($this->structure[$tmp_name])) {
+            return $this->structure[$tmp_name];
+        }
+
+        $this->structure[$tmp_name] = new Set($name);
+        return $this->structure[$tmp_name];
     }
 }
