@@ -86,10 +86,43 @@ class Form
     }
 
     /**
-     * @param $name
-     * @return mixed
+     * @param $alert_name
+     * @return $this
      */
-    public function getGroup($name): Group
+    public function addAlert(string $alert_name): Form
+    {
+        $alerts = $this->get('extra_alerts');
+        if(!is_array($alerts)) {
+            $this->set('extra_alerts', []);
+            $alerts = $this->get('extra_alerts');
+        }
+
+        $alerts[] = $alert_name;
+        $this->set('extra_alerts', $alerts);
+
+        return $this;
+    }
+
+    /**
+     * @param string $alert_name
+     * @return bool
+     */
+    public function removeAlert(string $alert_name): bool
+    {
+        $alerts = $this->get('extra_alerts');
+        if(isset($alerts[$alert_name])) {
+            unset($alerts[$alert_name]);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $name
+     * @return Group
+     */
+    public function getGroup(string $name): Group
     {
         $tmp_name = $this->buildTmpName($name , 'group');
         if (isset($this->structure[$tmp_name])) {
@@ -101,10 +134,10 @@ class Form
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return bool
      */
-    public function removeGroup($name): bool
+    public function removeGroup(string $name): bool
     {
         $tmp_name = $this->buildTmpName($name, 'group');
         if (isset($this->structure[$tmp_name])) {
@@ -116,10 +149,10 @@ class Form
     }
 
     /**
-     * @param $name
-     * @return Button
+     * @param string $name
+     * @return BUtton
      */
-    public function getButton($name): Button
+    public function getButton(string $name): Button
     {
         $tmp_name = $this->buildTmpName($name, 'button');
         if (isset($this->buttons[$tmp_name])) {
@@ -131,10 +164,10 @@ class Form
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return bool
      */
-    public function removeButton($name): bool
+    public function removeButton(string $name): bool
     {
         $tmp_name = $this->buildTmpName($name, 'button');
         if (isset($this->buttons[$tmp_name])) {
@@ -146,10 +179,10 @@ class Form
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return Hidden
      */
-    public function getHiddenField($name): Hidden
+    public function getHiddenField(string $name): Hidden
     {
         $tmp_name = $this->buildTmpName($name, 'hf');
         if (isset($this->hidden_fields[$tmp_name])) {
@@ -161,10 +194,10 @@ class Form
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return bool
      */
-    public function removeHiddenField($name): bool
+    public function removeHiddenField(string $name): bool
     {
         $tmp_name = $this->buildTmpName($name, 'hf');
         if (isset($this->buttons[$tmp_name])) {
@@ -176,10 +209,11 @@ class Form
     }
 
     /**
-     * @param $name
+     * @param string $name
+     * @param string $key
      * @return string
      */
-    protected function buildTmpName($name, $key): string
+    protected function buildTmpName(string $name, string $key): string
     {
         return '_'.$key.'_'.$name;
     }
@@ -194,14 +228,25 @@ class Form
     }
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param mixed $value
      * @return $this
      */
-    public function set($name, $value): Form
+    public function set(string $name, $value): Form
     {
         $this->prototype[$name] = $value;
         return $this;
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function get(string $key)
+    {
+        if(isset($this->prototype[$key])) {
+            return $this->prototype[$key];
+        }
     }
 
     /**
@@ -256,12 +301,12 @@ class Form
     }
 
     /**
-     * @param $text
-     * @param $href
+     * @param string $text
+     * @param string $href
      * @param string $rel
-     * @return Group
+     * @return $this
      */
-    public function withActionButton($text, $href, $rel = ''): Form
+    public function withActionButton(string $text, string $href, string $rel = ''): Form
     {
         $this->set('action_button', ['text' => $text, 'href' => $href, 'rel' => $rel]);
         return $this;

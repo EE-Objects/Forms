@@ -140,7 +140,6 @@ class Set
         return $this;
     }
 
-
     /**
      * @param $name
      * @return string
