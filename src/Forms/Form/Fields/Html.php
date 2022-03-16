@@ -3,12 +3,12 @@ namespace EeObjects\Forms\Form\Fields;
 
 use EeObjects\Forms\Form\Field;
 
-class ShortText extends Field
+class Html extends Field
 {
     /**
-     * @var int[]
+     * @var null[]
      */
     protected $field_prototype = [
-        'label' => null
+        'content' => '',
     ];
 }

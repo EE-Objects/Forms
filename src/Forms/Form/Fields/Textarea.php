@@ -6,11 +6,10 @@ use EeObjects\Forms\Form\Field;
 class Textarea extends Field
 {
     /**
-     * @var int[]
+     * @var null[]
      */
     protected $field_prototype = [
-        'maxlength' => null,
-        'type' => 'textarea',
+        'kill_pipes' => null,
         'cols' => null,
         'rows' => null
     ];

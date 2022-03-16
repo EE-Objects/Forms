@@ -9,7 +9,6 @@ class Password extends Field
      * @var int[]
      */
     protected $field_prototype = [
-        'maxlength' => null,
-        'type' => 'text'
+        'maxlength' => null
     ];
 }
