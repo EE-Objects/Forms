@@ -11,6 +11,7 @@ abstract class OptionsField extends Field
         'no_results' => null,
         'encode' => null,
         'disabled_choices' => null,
+        'empty_text' => null,
         'selectable' => null,
         'reorderable' => null,
         'removable' => null,
