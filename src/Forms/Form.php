@@ -2,6 +2,8 @@
 namespace EeObjects\Forms;
 
 use EeObjects\Forms\Form\Group;
+use EeObjects\Forms\Form\BUtton;
+use EeObjects\Forms\Form\HiddenField;
 
 class Form
 {
@@ -33,6 +35,13 @@ class Form
     protected $structure = [];
 
     /**
+     * @var array
+     */
+    protected $buttons = [];
+
+    protected $hidden_fields = [];
+
+    /**
      * @param $name
      * @return mixed
      */
@@ -45,6 +54,26 @@ class Form
 
         $this->structure[$tmp_name] = new Group($name);
         return $this->structure[$tmp_name];
+    }
+
+    /**
+     * @param $name
+     * @return BUtton
+     */
+    public function getButton($name)
+    {
+        $tmp_name = '_button_'.$name;
+        if (isset($this->buttons[$tmp_name])) {
+            return $this->buttons[$tmp_name];
+        }
+
+        $this->buttons[$tmp_name] = new Button($name);
+        return $this->buttons[$tmp_name];
+    }
+
+    public function getHiddenFields()
+    {
+
     }
 
     /**
@@ -89,7 +118,19 @@ class Form
         }
 
         $return['sections'] = $sections;
-        $return['tabs'] = $tabs;
+        if($tabs) {
+            $return['tabs'] = $tabs;
+            $return['sections'] = [];
+        }
+
+        $buttons = [];
+        foreach($this->buttons AS $button) {
+            $buttons[] = $button->toArray();
+        }
+
+        if($buttons) {
+            $return['buttons'] = $buttons;
+        }
 
         return $return;
     }

@@ -102,7 +102,13 @@ class Set
         );
     }
 
-    public function withButton($text, $rel = '', $for = '')
+    /**
+     * @param $text
+     * @param string $rel
+     * @param string $for
+     * @return $this
+     */
+    public function withButton($text, $rel = '', $for = ''): Set
     {
         $this->set('button', ['text' => $text, 'rel' => $rel, 'for' => $for]);
         return $this;
