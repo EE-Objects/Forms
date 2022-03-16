@@ -2,8 +2,8 @@
 
 namespace EeObjects\Forms\Form\Fields;
 
-use EeObjects\Forms\Form\Field;
+use EeObjects\Forms\Form\OptionsField;
 
-class Multiselect extends Field
+class Multiselect extends OptionsField
 {
 }

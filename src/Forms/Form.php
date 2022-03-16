@@ -309,4 +309,156 @@ class Form
         $this->set('action_button', ['text' => $text, 'href' => $href, 'rel' => $rel]);
         return $this;
     }
+
+    /**
+     * @return $this
+     */
+    public function withOutActionButton(): Form
+    {
+        $this->set('action_button', null);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSaveBtnText()
+    {
+        return $this->get('save_btn_text');
+    }
+
+    /**
+     * @param string $text
+     * @return $this
+     */
+    public function setSaveBtnText(string $text): Form
+    {
+        $this->set('save_btn_text', $text);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSaveBtnTextWorking()
+    {
+        return $this->get('save_btn_text_working');
+    }
+
+    /**
+     * @param string $text
+     * @return $this
+     */
+    public function setSaveBtnTextWorking(string $text): Form
+    {
+        $this->set('save_btn_text_working', $text);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAjaxValidate()
+    {
+        return $this->get('ajax_validate');
+    }
+
+    /**
+     * @param string $text
+     * @return $this
+     */
+    public function setAjaxValidate(bool $boolean): Form
+    {
+        $this->set('ajax_validate', $boolean);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAlertsName()
+    {
+        return $this->get('alerts_name');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function setAlertsName(string $text)
+    {
+        $this->set('alerts_name', $text);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCpPageTitleAlt()
+    {
+        return $this->get('cp_page_title_alt');
+    }
+
+    /**
+     * @param string $text
+     * @return $this
+     */
+    public function setCpPageTitleAlt(string $text)
+    {
+        $this->set('cp_page_title_alt', $text);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCpPageTitle()
+    {
+        return $this->get('cp_page_title');
+    }
+
+    /**
+     * @param string $text
+     * @return $this
+     */
+    public function setCpPageTitle(string $text)
+    {
+        $this->set('cp_page_title', $text);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHideTopButtons()
+    {
+        return $this->get('hide_top_buttons');
+    }
+
+    /**
+     * @param bool $boolean
+     * @return $this
+     */
+    public function setHideTopButtons(bool $boolean): Form
+    {
+        $this->set('hide_top_buttons', $boolean);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBaseUrl()
+    {
+        return $this->get('base_url');
+    }
+
+    /**
+     * @param string $text
+     * @return $this
+     */
+    public function setBaseUrl(string $url)
+    {
+        $this->set('base_url', $url);
+        return $this;
+    }
 }
