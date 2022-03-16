@@ -56,6 +56,17 @@ abstract class Field
     }
 
     /**
+     * @param $key
+     * @return mixed
+     */
+    public function get($key)
+    {
+        if(isset($this->prototype[$key])) {
+            return $this->prototype[$key];
+        }
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array

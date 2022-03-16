@@ -3,7 +3,7 @@ namespace EeObjects\Forms;
 
 use EeObjects\Forms\Form\Group;
 use EeObjects\Forms\Form\BUtton;
-use EeObjects\Forms\Form\HiddenField;
+use EeObjects\Forms\Form\Fields\Hidden;
 
 class Form
 {
@@ -15,7 +15,7 @@ class Form
         'save_btn_text_working' => 'saving',
         'ajax_validate' => null,
         'has_file_input' => null,
-        'alerts_name' => '',
+        'alerts_name' => null,
         'form_hidden' => null,
         'cp_page_title_alt' => null,
         'cp_page_title' => '',
@@ -39,13 +39,16 @@ class Form
      */
     protected $buttons = [];
 
+    /**
+     * @var array
+     */
     protected $hidden_fields = [];
 
     /**
      * @param $name
      * @return mixed
      */
-    public function getGroup($name)
+    public function getGroup($name): Group
     {
         $tmp_name = '_group_'.$name;
         if (isset($this->structure[$tmp_name])) {
@@ -58,9 +61,9 @@ class Form
 
     /**
      * @param $name
-     * @return BUtton
+     * @return Button
      */
-    public function getButton($name)
+    public function getButton($name): Button
     {
         $tmp_name = '_button_'.$name;
         if (isset($this->buttons[$tmp_name])) {
@@ -71,9 +74,19 @@ class Form
         return $this->buttons[$tmp_name];
     }
 
-    public function getHiddenFields()
+    /**
+     * @param $name
+     * @return Hidden
+     */
+    public function getHiddenField($name): Hidden
     {
+        $tmp_name = '_hf_'.$name;
+        if (isset($this->hidden_fields[$tmp_name])) {
+            return $this->hidden_fields[$tmp_name];
+        }
 
+        $this->hidden_fields[$tmp_name] = new Hidden($name);
+        return $this->hidden_fields[$tmp_name];
     }
 
     /**
@@ -130,6 +143,15 @@ class Form
 
         if($buttons) {
             $return['buttons'] = $buttons;
+        }
+
+        $hidden_fields = [];
+        foreach($this->hidden_fields AS $hidden_field) {
+            $hidden_fields[$hidden_field->getName()] = $hidden_field->get('value');
+        }
+
+        if($hidden_fields) {
+            $return['form_hidden'] = $hidden_fields;
         }
 
         return $return;
