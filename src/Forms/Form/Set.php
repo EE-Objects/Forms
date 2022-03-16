@@ -24,27 +24,31 @@ class Set
      */
     protected $structure = [];
 
+    /**
+     * Set constructor.
+     * @param string $name
+     */
     public function __construct(string $name = '')
     {
         $this->name = $this->prototype['title'] = $name;
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param $value
      * @return $this
      */
-    public function set($name, $value): Set
+    public function set(string $name, $value): Set
     {
         $this->prototype[$name] = $value;
         return $this;
     }
 
     /**
-     * @param $key
+     * @param string $key
      * @return mixed
      */
-    public function get($key)
+    public function get(string $key)
     {
         if(isset($this->prototype[$key])) {
             return $this->prototype[$key];
@@ -73,10 +77,12 @@ class Set
     }
 
     /**
-     * @param $name
-     * @param $type
+     * @param string $name
+     * @param string $type
+     * @return Field
+     * @throws \Exception
      */
-    public function getField($name, $type): Field
+    public function getField(string $name, string $type): Field
     {
         $tmp_name = $this->buildTmpName($name);
         if (isset($this->structure[$tmp_name])) {
@@ -88,10 +94,10 @@ class Set
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return bool
      */
-    public function removeField($name): bool
+    public function removeField(string $name): bool
     {
         $tmp_name = $this->buildTmpName($name);
         if (isset($this->structure[$tmp_name])) {
@@ -103,11 +109,12 @@ class Set
     }
 
     /**
-     * @param $name
-     * @param $type
-     * @return string
+     * @param string $name
+     * @param string $type
+     * @return Field
+     * @throws \Exception
      */
-    protected function buildField($name, $type): Field
+    protected function buildField(string $name, string $type): Field
     {
         $field = '\EeObjects\Forms\Form\Fields\\'.$this->studly($type);
         if (class_exists($field)) {
@@ -121,7 +128,7 @@ class Set
      * @param string $value
      * @return string
      */
-    protected function studly($value): string
+    protected function studly(string $value): string
     {
         return str_replace(' ', '',
             ucwords(str_replace(['-', '_'], ' ', $value))
@@ -129,22 +136,22 @@ class Set
     }
 
     /**
-     * @param $text
+     * @param string $text
      * @param string $rel
      * @param string $for
      * @return $this
      */
-    public function withButton($text, $rel = '', $for = ''): Set
+    public function withButton(string $text, string $rel = '', string $for = ''): Set
     {
         $this->set('button', ['text' => $text, 'rel' => $rel, 'for' => $for]);
         return $this;
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return string
      */
-    protected function buildTmpName($name): string
+    protected function buildTmpName(string $name): string
     {
         return '_field_'.$name;
     }

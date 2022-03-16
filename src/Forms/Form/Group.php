@@ -18,6 +18,10 @@ class Group
      */
     protected $structure = [];
 
+    /**
+     * Group constructor.
+     * @param string $name
+     */
     public function __construct(string $name = '')
     {
         $this->name = $name;
