@@ -76,6 +76,16 @@ class Form
     }
 
     /**
+     * @param bool $bool
+     * @return $this
+     */
+    public function asFileUpload(bool $bool = true): Form
+    {
+        $this->set('has_file_input', $bool);
+        return $this;
+    }
+
+    /**
      * @param $name
      * @return mixed
      */
@@ -177,7 +187,7 @@ class Form
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $data = $this->compile();
         return $data;
@@ -188,7 +198,7 @@ class Form
      * @param $value
      * @return $this
      */
-    public function set($name, $value)
+    public function set($name, $value): Form
     {
         $this->prototype[$name] = $value;
         return $this;
@@ -197,7 +207,7 @@ class Form
     /**
      * @return array
      */
-    protected function compile()
+    protected function compile(): array
     {
         $return = [];
         foreach($this->prototype AS $key => $value) {
