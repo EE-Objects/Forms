@@ -5,7 +5,7 @@ namespace EeObjects\Forms\Form;
 class Set
 {
     /**
-     * @var mixed|string
+     * @var string
      */
     protected $name = '';
 

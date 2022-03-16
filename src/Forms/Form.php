@@ -322,7 +322,7 @@ class Form
     /**
      * @return mixed
      */
-    public function getSaveBtnText()
+    public function getSaveBtnText(): ?string
     {
         return $this->get('save_btn_text');
     }
@@ -340,7 +340,7 @@ class Form
     /**
      * @return mixed
      */
-    public function getSaveBtnTextWorking()
+    public function getSaveBtnTextWorking(): ?string
     {
         return $this->get('save_btn_text_working');
     }
@@ -358,7 +358,7 @@ class Form
     /**
      * @return mixed
      */
-    public function getAjaxValidate()
+    public function getAjaxValidate(): ?bool
     {
         return $this->get('ajax_validate');
     }
@@ -376,7 +376,7 @@ class Form
     /**
      * @return mixed
      */
-    public function getAlertsName()
+    public function getAlertsName(): ?string
     {
         return $this->get('alerts_name');
     }
@@ -384,7 +384,7 @@ class Form
     /**
      * @return mixed
      */
-    public function setAlertsName(string $text)
+    public function setAlertsName(string $text): Form
     {
         $this->set('alerts_name', $text);
         return $this;
@@ -393,7 +393,7 @@ class Form
     /**
      * @return mixed
      */
-    public function getCpPageTitleAlt()
+    public function getCpPageTitleAlt(): ?string
     {
         return $this->get('cp_page_title_alt');
     }
@@ -402,7 +402,7 @@ class Form
      * @param string $text
      * @return $this
      */
-    public function setCpPageTitleAlt(string $text)
+    public function setCpPageTitleAlt(string $text): Form
     {
         $this->set('cp_page_title_alt', $text);
         return $this;
@@ -411,7 +411,7 @@ class Form
     /**
      * @return mixed
      */
-    public function getCpPageTitle()
+    public function getCpPageTitle(): ?string
     {
         return $this->get('cp_page_title');
     }
@@ -420,7 +420,7 @@ class Form
      * @param string $text
      * @return $this
      */
-    public function setCpPageTitle(string $text)
+    public function setCpPageTitle(string $text): Form
     {
         $this->set('cp_page_title', $text);
         return $this;
@@ -447,7 +447,7 @@ class Form
     /**
      * @return mixed
      */
-    public function getBaseUrl()
+    public function getBaseUrl(): ?string
     {
         return $this->get('base_url');
     }
@@ -456,7 +456,7 @@ class Form
      * @param string $text
      * @return $this
      */
-    public function setBaseUrl(string $url)
+    public function setBaseUrl(string $url): Form
     {
         $this->set('base_url', $url);
         return $this;
