@@ -1,4 +1,5 @@
 <?php
+
 namespace EeObjects\Forms\Form;
 
 class Group
@@ -54,7 +55,7 @@ class Group
     public function toArray(): array
     {
         $return = [];
-        foreach($this->structure AS $key => $field_set) {
+        foreach ($this->structure as $key => $field_set) {
             $return[] = $field_set->toArray();
         }
 
@@ -97,6 +98,6 @@ class Group
      */
     protected function buildTmpName(string $name): string
     {
-        return '_set_'.$name;
+        return '_set_' . $name;
     }
 }

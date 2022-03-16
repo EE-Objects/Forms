@@ -1,4 +1,5 @@
 <?php
+
 namespace EeObjects\Forms\Form;
 
 abstract class OptionsField extends Field

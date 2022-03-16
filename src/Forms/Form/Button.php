@@ -1,4 +1,5 @@
 <?php
+
 namespace EeObjects\Forms\Form;
 
 class Button
@@ -60,8 +61,8 @@ class Button
     public function toArray(): array
     {
         $return = [];
-        foreach($this->prototype AS $key => $value) {
-            if(!is_null($value)) {
+        foreach ($this->prototype as $key => $value) {
+            if (!is_null($value)) {
                 $return[$key] = $value;
             }
         }

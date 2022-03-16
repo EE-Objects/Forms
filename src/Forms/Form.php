@@ -1,4 +1,5 @@
 <?php
+
 namespace EeObjects\Forms;
 
 use EeObjects\Forms\Form\Group;
@@ -92,7 +93,7 @@ class Form
     public function addAlert(string $alert_name): Form
     {
         $alerts = $this->get('extra_alerts');
-        if(!is_array($alerts)) {
+        if (!is_array($alerts)) {
             $this->set('extra_alerts', []);
             $alerts = $this->get('extra_alerts');
         }
@@ -110,7 +111,7 @@ class Form
     public function removeAlert(string $alert_name): bool
     {
         $alerts = $this->get('extra_alerts');
-        if(isset($alerts[$alert_name])) {
+        if (isset($alerts[$alert_name])) {
             unset($alerts[$alert_name]);
             return true;
         }
@@ -124,7 +125,7 @@ class Form
      */
     public function getGroup(string $name): Group
     {
-        $tmp_name = $this->buildTmpName($name , 'group');
+        $tmp_name = $this->buildTmpName($name, 'group');
         if (isset($this->structure[$tmp_name])) {
             return $this->structure[$tmp_name];
         }
@@ -215,7 +216,7 @@ class Form
      */
     protected function buildTmpName(string $name, string $key): string
     {
-        return '_'.$key.'_'.$name;
+        return '_' . $key . '_' . $name;
     }
 
     /**
@@ -244,7 +245,7 @@ class Form
      */
     public function get(string $key)
     {
-        if(isset($this->prototype[$key])) {
+        if (isset($this->prototype[$key])) {
             return $this->prototype[$key];
         }
     }
@@ -255,15 +256,15 @@ class Form
     protected function compile(): array
     {
         $return = [];
-        foreach($this->prototype AS $key => $value) {
-            if(!is_null($value)) {
+        foreach ($this->prototype as $key => $value) {
+            if (!is_null($value)) {
                 $return[$key] = $value;
             }
         }
 
         $sections = $tabs = [];
-        foreach($this->structure AS $structure) {
-            if($this->isTab()) {
+        foreach ($this->structure as $structure) {
+            if ($this->isTab()) {
                 $tabs[$structure->getName()] = $structure->renderTab($return);
             } else {
                 $sections[$structure->getName()] = $structure->toArray();
@@ -271,26 +272,26 @@ class Form
         }
 
         $return['sections'] = $sections;
-        if($tabs) {
+        if ($tabs) {
             $return['tabs'] = $tabs;
             $return['sections'] = [];
         }
 
         $buttons = [];
-        foreach($this->buttons AS $button) {
+        foreach ($this->buttons as $button) {
             $buttons[] = $button->toArray();
         }
 
-        if($buttons) {
+        if ($buttons) {
             $return['buttons'] = $buttons;
         }
 
         $hidden_fields = [];
-        foreach($this->hidden_fields AS $hidden_field) {
+        foreach ($this->hidden_fields as $hidden_field) {
             $hidden_fields[$hidden_field->getName()] = $hidden_field->get('value');
         }
 
-        if($hidden_fields) {
+        if ($hidden_fields) {
             $return['form_hidden'] = $hidden_fields;
         }
 

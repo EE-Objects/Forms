@@ -1,4 +1,5 @@
 <?php
+
 namespace EeObjects\Forms\Form;
 
 abstract class Field
@@ -66,7 +67,7 @@ abstract class Field
      */
     public function get(string $key)
     {
-        if(isset($this->prototype[$key])) {
+        if (isset($this->prototype[$key])) {
             return $this->prototype[$key];
         }
     }
@@ -77,8 +78,8 @@ abstract class Field
     public function toArray(): array
     {
         $return = [];
-        foreach($this->prototype AS $key => $value) {
-            if(!is_null($value)) {
+        foreach ($this->prototype as $key => $value) {
+            if (!is_null($value)) {
                 $return[$key] = $value;
             }
         }

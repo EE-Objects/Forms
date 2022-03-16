@@ -1,4 +1,5 @@
 <?php
+
 namespace EeObjects\Forms\Form;
 
 class Set
@@ -50,7 +51,7 @@ class Set
      */
     public function get(string $key)
     {
-        if(isset($this->prototype[$key])) {
+        if (isset($this->prototype[$key])) {
             return $this->prototype[$key];
         }
     }
@@ -61,14 +62,14 @@ class Set
     public function toArray(): array
     {
         $return = [];
-        foreach($this->prototype AS $key => $value) {
-            if(!is_null($value)) {
+        foreach ($this->prototype as $key => $value) {
+            if (!is_null($value)) {
                 $return[$key] = $value;
             }
         }
 
         $fields = [];
-        foreach($this->structure AS $structure) {
+        foreach ($this->structure as $structure) {
             $fields[$structure->getName()] = $structure->toArray();
         }
 
@@ -116,12 +117,12 @@ class Set
      */
     protected function buildField(string $name, string $type): Field
     {
-        $field = '\EeObjects\Forms\Form\Fields\\'.$this->studly($type);
+        $field = '\EeObjects\Forms\Form\Fields\\' . $this->studly($type);
         if (class_exists($field)) {
             return new $field($name, $type);
         }
 
-        throw new \Exception($field.' does not exist!');
+        throw new \Exception($field . ' does not exist!');
     }
 
     /**
@@ -153,6 +154,6 @@ class Set
      */
     protected function buildTmpName(string $name): string
     {
-        return '_field_'.$name;
+        return '_field_' . $name;
     }
 }
