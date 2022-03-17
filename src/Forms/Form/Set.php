@@ -17,6 +17,8 @@ class Set
         'desc' => null,
         'desc_cont' => null,
         'example' => null,
+        'grid' => null,
+        'wide' => null,
         'button' => null
     ];
 
@@ -239,6 +241,26 @@ class Set
     public function setExample(string $example): Set
     {
         $this->set('example', $example);
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function withGrid(): Set
+    {
+        $this->set('grid', true);
+        $this->set('wide', true);
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function withoutGrid(): Set
+    {
+        $this->set('grid', false);
+        $this->set('wide', false);
         return $this;
     }
 }
