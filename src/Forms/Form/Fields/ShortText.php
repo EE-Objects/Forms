@@ -12,4 +12,22 @@ class ShortText extends Field
     protected $field_prototype = [
         'label' => null
     ];
+
+    /**
+     * @return string|null
+     */
+    public function getLabel(): ?string
+    {
+        return $this->get('label');
+    }
+
+    /**
+     * @param string $label
+     * @return $this
+     */
+    public function setLabel(string $label): ShortText
+    {
+        $this->set('label', $label);
+        return $this;
+    }
 }

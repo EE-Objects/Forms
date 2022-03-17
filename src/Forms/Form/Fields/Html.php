@@ -12,4 +12,22 @@ class Html extends Field
     protected $field_prototype = [
         'content' => '',
     ];
+
+    /**
+     * @param $content
+     * @return $this
+     */
+    public function setContent($content): Html
+    {
+        $this->set('content', $content);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContent()
+    {
+        return $this->get('content');
+    }
 }
