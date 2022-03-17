@@ -6,7 +6,6 @@ use EeObjects\Forms\Form\OptionsField;
 
 class Multiselect extends OptionsField
 {
-
     /**
      * @param string $name
      * @param $value
@@ -17,7 +16,7 @@ class Multiselect extends OptionsField
     public function addDropdown(string $name, $value, $label, array $options = []): Multiselect
     {
         $choices = $this->getChoices();
-        if(!is_array($choices)) {
+        if (!is_array($choices)) {
             $choices = [];
         }
 
@@ -38,7 +37,7 @@ class Multiselect extends OptionsField
     public function removeDropdown(string $name): Multiselect
     {
         $choices = $this->getChoices();
-        if(isset($choices[$name])) {
+        if (isset($choices[$name])) {
             unset($choices[$name]);
             $this->setChoices($choices);
         }
