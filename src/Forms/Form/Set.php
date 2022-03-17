@@ -237,6 +237,4 @@ class Set
         $this->set('example', $example);
         return $this;
     }
-
-
 }
