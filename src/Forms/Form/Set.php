@@ -83,11 +83,15 @@ class Set
      * @return Field
      * @throws \Exception
      */
-    public function getField(string $name, string $type): Field
+    public function getField(string $name, string $type = ''): Field
     {
         $tmp_name = $this->buildTmpName($name);
         if (isset($this->structure[$tmp_name])) {
             return $this->structure[$tmp_name];
+        }
+
+        if(!$type) {
+            $type = 'text';
         }
 
         $this->structure[$tmp_name] = $this->buildField($name, $type);
