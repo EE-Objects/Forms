@@ -156,4 +156,87 @@ class Set
     {
         return '_field_' . $name;
     }
+
+    /**
+     * @return $this
+     */
+    public function withOutButton(): Set
+    {
+        $this->set('button', null);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle(): ?string
+    {
+        return $this->get('title');
+    }
+
+    /**
+     * @param string $title
+     * @return $this
+     */
+    public function setTitle(string $title): Set
+    {
+        $this->set('title', $title);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDesc(): ?string
+    {
+        return $this->get('desc');
+    }
+
+    /**
+     * @param string $title
+     * @return $this
+     */
+    public function setDesc(string $desc): Set
+    {
+        $this->set('desc', $desc);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescCont(): ?string
+    {
+        return $this->get('desc_cont');
+    }
+
+    /**
+     * @param string $desc_cont
+     * @return $this
+     */
+    public function setDescCont(string $desc_cont): Set
+    {
+        $this->set('desc_cont', $desc_cont);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExample(): ?string
+    {
+        return $this->get('example');
+    }
+
+    /**
+     * @param string $example
+     * @return $this
+     */
+    public function setExample(string $example): Set
+    {
+        $this->set('example', $example);
+        return $this;
+    }
+
+
 }
