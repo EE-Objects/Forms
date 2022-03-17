@@ -17,7 +17,7 @@ class Button
         'attrs' => null,
         'value' => '',
         'name' => 'save',
-        'type' => null,
+        'type' => 'button',
         'class' => null,
         'html' => null,
         'text' => 'save',
@@ -29,6 +29,10 @@ class Button
      */
     protected $structure = [];
 
+    /**
+     * Button constructor.
+     * @param string $name
+     */
     public function __construct(string $name = '')
     {
         $this->name = $this->prototype['name'] = $name;
@@ -54,6 +58,16 @@ class Button
         return $this;
     }
 
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function get(string $key)
+    {
+        if (isset($this->prototype[$key])) {
+            return $this->prototype[$key];
+        }
+    }
 
     /**
      * @return array
@@ -68,5 +82,154 @@ class Button
         }
 
         return $return;
+    }
+
+    /**
+     * @param string $shortcut
+     * @return $this
+     */
+    public function setShortcut(string $shortcut): Button
+    {
+        $this->set('shortcut', $shortcut);
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getShortcut(): ?string
+    {
+        return $this->get('shortcut');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAttrs(): ?string
+    {
+        return $this->get('attrs');
+    }
+
+    /**
+     * @param string $attrs
+     * @return $this
+     */
+    public function setAttrs(string $attrs): Button
+    {
+        $this->set('attrs', $attrs);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->get('value');
+    }
+
+    /**
+     * @param $value
+     * @return $this
+     */
+    public function setValue($value): Button
+    {
+        $this->set('value', $value);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType(): ?string
+    {
+        return $this->get('type');
+    }
+
+    /**
+     * @param $type
+     * @return $this
+     */
+    public function setType(string $type): Button
+    {
+        $types = ['button', 'reset', 'submit'];
+        if(!in_array($type, $types)) {
+            $type = 'button';
+        }
+
+        $this->set('type', $type);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClass(): ?string
+    {
+        return $this->get('class');
+    }
+
+    /**
+     * @param string $class
+     * @return $this
+     */
+    public function setClass(string $class): Button
+    {
+        $this->set('class', $class);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHtml(): ?string
+    {
+        return $this->get('html');
+    }
+
+    /**
+     * @param string $class
+     * @return $this
+     */
+    public function setHtml(string $html): Button
+    {
+        $this->set('html', $html);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getText(): ?string
+    {
+        return $this->get('text');
+    }
+
+    /**
+     * @param string $text
+     * @return $this
+     */
+    public function setText(string $text): Button
+    {
+        $this->set('text', $text);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWorking(): ?string
+    {
+        return $this->get('working');
+    }
+
+    /**
+     * @param string $working
+     * @return $this
+     */
+    public function setWorking(string $working): Button
+    {
+        $this->set('working', $working);
+        return $this;
     }
 }
