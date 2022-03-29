@@ -3,7 +3,7 @@
 namespace EeObjects\Forms;
 
 use EeObjects\Forms\Form\Group;
-use EeObjects\Forms\Form\BUtton;
+use EeObjects\Forms\Form\Button;
 use EeObjects\Forms\Form\Fields\Hidden;
 
 class Form
