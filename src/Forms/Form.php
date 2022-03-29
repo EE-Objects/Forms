@@ -461,4 +461,13 @@ class Form
         $this->set('base_url', $url);
         return $this;
     }
+
+    /**
+     * Renders EE's shared form
+     * @return string [rendered form view]
+     */
+    public function render()
+    {
+        return ee('View')->make('ee:_shared/form')->render($this->toArray());
+    }
 }
