@@ -17,7 +17,7 @@ class Table extends Html
     /**
      * @return mixed
      */
-    public function getColumns()
+    public function getColumns(): ?array
     {
         return $this->get('columns');
     }
@@ -35,7 +35,7 @@ class Table extends Html
     /**
      * @return array|null
      */
-    public function getOptions(): ? array
+    public function getOptions(): ?array
     {
         return $this->get('table_options');
     }
@@ -106,7 +106,8 @@ class Table extends Html
      */
     protected function renderTable(): string
     {
-        $table = ee('CP/Table', $this->getOptions());
+        $options = is_array($this->getOptions()) ? $this->getOptions() : [];
+        $table = ee('CP/Table', $options);
         $table->setColumns($this->getColumns());
         $table->setNoResultsText($this->getNoResultsText());
         $table->setData($this->getData());
