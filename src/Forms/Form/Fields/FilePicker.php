@@ -11,7 +11,7 @@ class FilePicker extends Html
     {
         ee()->load->library('file_field');
         $type = $this->isImage() ? 'image' : 'all';
-        $dir = $this->isAll() ? $this->getUploadDir() : 'all';
+        $dir = $this->isAll() ? 'all' : $this->getUploadDir();
         $picker = ee()->file_field->dragAndDropField($this->getName(), $this->getValue(), $dir, $type);
         $this->setContent($picker);
         $this->set('type', 'html');
@@ -68,7 +68,7 @@ class FilePicker extends Html
      */
     public function isAll()
     {
-        return (int)$this->getUploadDir() >= 1;
+        return (int)$this->getUploadDir() < 1;
     }
 
     /**
