@@ -2,6 +2,8 @@
 
 namespace EeObjects\Forms\Form\Fields;
 
+use ExpressionEngine\Library\CP\Url;
+
 class Table extends Html
 {
     /**
@@ -77,16 +79,31 @@ class Table extends Html
     }
 
     /**
+     * @param array $row
+     * @return $this
+     */
+    public function addRow(array $row): Table
+    {
+        $rows = $this->getData();
+        $rows[] = $row;
+        $this->set('data', $rows);
+        return $this;
+    }
+
+    /**
      * @param $url
      * @return $this
      */
-    public function setBaseUrl($url = null): Table
+    public function setBaseUrl(Url $url = null): Table
     {
         $this->set('base_url', $url);
         return $this;
     }
 
-    public function getBaseUrl()
+    /**
+     * @return Url
+     */
+    public function getBaseUrl(): ?Url
     {
         return $this->get('base_url');
     }
