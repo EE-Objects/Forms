@@ -78,4 +78,12 @@ class FilePicker extends Html
     {
         return $this->get('_upload_dir');
     }
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return isset($_POST[$this->getName()]) ? $_POST[$this->getName()] : $this->get('value');
+    }
 }
