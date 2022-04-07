@@ -9,7 +9,7 @@ class Grid extends Table
      */
     protected $field_prototype = [
         'content' => '',
-        'add' => 'add',
+        'add' => 'add'
     ];
 
     /**
@@ -147,5 +147,25 @@ class Grid extends Table
     protected function generatePasswordInput($name, $value = ''): string
     {
         return form_password($name, $value);
+    }
+
+    /**
+     * @param $name
+     * @param $value
+     * @return string
+     */
+    protected function generateCheckboxInput($name, $value = ''): string
+    {
+        return form_hidden($name, '').form_checkbox($name, $value);
+    }
+
+    /**
+     * @param $name
+     * @param $value
+     * @return string
+     */
+    protected function generateTextareaInput($name, $value = ''): string
+    {
+        return form_textarea($name, $value);
     }
 }
