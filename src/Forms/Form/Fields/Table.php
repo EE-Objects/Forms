@@ -44,11 +44,15 @@ class Table extends Html
 
     /**
      * @param string $text
+     * @param $action_text
+     * @param $action_link
+     * @param $external
      * @return $this
      */
-    public function setNoResultsText(string $text): Table
+    public function setNoResultsText(string $text, string $action_text = '', Url $action_link = null, bool $external = false): Table
     {
-        $this->set('no_results_text', $text);
+        $arr = ['text' => $text, 'action_text' => $action_text, 'action_link' => $action_link, 'external' => $external];
+        $this->set('no_results_text', $arr);
         return $this;
     }
 
@@ -73,9 +77,9 @@ class Table extends Html
     /**
      * @return mixed
      */
-    public function getData()
+    public function getData(): array
     {
-        return $this->get('data');
+        return $this->get('data') ? $this->get('data') : [];
     }
 
     /**
@@ -126,7 +130,12 @@ class Table extends Html
         $options = is_array($this->getOptions()) ? $this->getOptions() : [];
         $table = ee('CP/Table', $options);
         $table->setColumns($this->getColumns());
-        $table->setNoResultsText($this->getNoResultsText());
+
+        $no_results = $this->getNoResultsText();
+        if(is_array($no_results)) {
+            $table->setNoResultsText($no_results['text'], $no_results['action_text'], $no_results['action_link'], $no_results['external']);
+        }
+
         $table->setData($this->getData());
         return ee('View')->make('ee:_shared/table')->render($table->viewData($this->getBaseUrl()));;
     }
