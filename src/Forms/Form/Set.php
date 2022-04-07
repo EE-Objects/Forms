@@ -119,7 +119,6 @@ class Set
      * @param string $name
      * @param string $type
      * @return Field
-     * @throws \Exception
      */
     protected function buildField(string $name, string $type): Field
     {
@@ -128,7 +127,7 @@ class Set
             return new $field($name, $type);
         }
 
-        throw new \Exception($field . ' does not exist!');
+        return new Fields\Input($name, $type);
     }
 
     /**
