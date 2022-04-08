@@ -57,7 +57,7 @@ class Grid extends Table
             $method = 'generate'.ucfirst($column['type']).'Input';
             $choices = isset($column['choices']) ? $column['choices'] : [];
             if(method_exists($this, $method)) {
-                $return[] = $this->$method($column['name'], value($column['value']), $choices);
+                $return[] = $this->$method($column['name'], $column);
             } else {
                 $return[] = $column['type'].' INVALID';
             }
@@ -83,15 +83,15 @@ class Grid extends Table
         }
 
         foreach($data AS $key => $value) {
-            $data = [];
+            $row_data = [];
             foreach($row_prototype AS $proto_key => $proto_value) {
                 if(isset($value[$proto_value['name']])) {
                     $method = 'generate'.ucfirst($proto_value['type']).'Input';
-                    $choices = isset($proto_value['choices']) ? $proto_value['choices'] : [];
                     if(method_exists($this, $method)) {
-                        $data[] = $this->$method($proto_value['name'], value($value[$proto_value['name']]), $choices);
+                        $proto_value['value'] = $value[$proto_value['name']];
+                        $row_data[] = $this->$method($proto_value['name'], $proto_value);
                     } else {
-                        $data[] = $proto_value['type'].' INVALID';
+                        $row_data[] = $proto_value['type'].' INVALID';
                     }
                 }
             }
@@ -100,7 +100,7 @@ class Grid extends Table
                 'attrs' => [
                     'row_id' => $key,
                 ],
-                'columns' => $data
+                'columns' => $row_data
             ];
         }
 
@@ -136,44 +136,33 @@ class Grid extends Table
     }
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param array $settings
      * @return string
      */
-    protected function generateTextInput($name, $value = ''): string
+    protected function generateTextInput(string $name, array $settings): string
     {
-        return form_input($name, $value);
+        return form_input($name, element('value', $settings));
     }
 
     /**
-     * @param $name
-     * @param $value
-     * @param array $choices
+     * @param string $name
+     * @param array $settings
      * @return string
      */
-    protected function generateSelectInput($name, $value = '', array $choices = []): string
+    protected function generateSelectInput(string $name, array $settings): string
     {
-        return form_dropdown($name, $choices, $value);
+        return form_dropdown($name, element('choices', $settings), element('value', $settings));
     }
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param array $settings
      * @return string
      */
-    protected function generatePasswordInput($name, $value = ''): string
+    protected function generatePasswordInput(string $name, array $settings): string
     {
-        return form_password($name, $value);
-    }
-
-    /**
-     * @param $name
-     * @param $value
-     * @return string
-     */
-    protected function generateCheckboxInput($name, $value = ''): string
-    {
-        return form_checkbox($name, $value);
+        return form_password($name, element('value', $settings));
     }
 
     /**
@@ -181,8 +170,36 @@ class Grid extends Table
      * @param $value
      * @return string
      */
-    protected function generateTextareaInput($name, $value = ''): string
+    protected function generateCheckboxInput(string $name, array $settings): string
     {
-        return form_textarea($name, $value);
+        $checked = element('value', $settings) == 1;
+        return form_checkbox($name, 1, $checked);
+    }
+
+    /**
+     * @param $name
+     * @param $value
+     * @return string
+     */
+    protected function generateTextareaInput(string $name, array $settings): string
+    {
+        $data = [
+            'name' => $name,
+            'value' => element('value', $settings),
+            'cols' => element('cols', $settings, 90),
+            'rows' => element('rows', $settings, 12)
+        ];
+
+        return form_textarea($data);
+    }
+
+    /**
+     * @param $name
+     * @param array $settings
+     * @return string
+     */
+    protected function generateFileInput(string $name, array $settings): string
+    {
+        return form_upload($name, $value = '', $extra = '');
     }
 }
