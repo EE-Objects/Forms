@@ -107,15 +107,32 @@ class Grid extends Table
         return $return;
     }
 
-    protected function convertPostData()
+    /**
+     * With Grid, we have to handle our own POST processing to handle
+     * existing values so we do that here. It looks worse than it it,
+     * but due to how some input elements (file, checkbox, for example)
+     * won't include a POST value based on "reasons" we use our definition
+     * as a base since otherwise we'll miss some parameters.
+     * @return array
+     */
+    protected function convertPostData(): array
     {
-        return $_POST[$this->getName()]['rows'];
+        $post_data = $_POST[$this->getName()]['rows'];
         $row_prototype = $this->get('row_definition');
-        print_r($row_prototype);
-        $data = $this->getData();
-        print_r($_POST);
-        print_r($_POST[$this->getName()]);
-        exit;
+        $return = [];
+        foreach($post_data AS $row_id => $row) {
+            $data = [];
+            foreach($row_prototype As $k => $v) {
+                $data[$v['name']] = '';
+                if(isset($row[$v['name']])) {
+                    $data[$v['name']] = $row[$v['name']];
+                }
+            }
+
+            $return[] = $data;
+        }
+
+        return $return;
     }
 
     /**
@@ -156,7 +173,7 @@ class Grid extends Table
      */
     protected function generateCheckboxInput($name, $value = ''): string
     {
-        return form_hidden($name, '').form_checkbox($name, $value);
+        return form_checkbox($name, $value);
     }
 
     /**
